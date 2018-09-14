@@ -1,0 +1,11 @@
+Effects of PID 
+
+
+-Started with setting all the values one and later learning by hit and trial or we can say ReinforceMent Learning :P
+
+-Ki was an essential part of The PID Control System for the stabalize purpose.
+set the value to 0.0001 got descent accelearation but there were strong loss of inertia during turning .It Can observed on Simulator it was getting jerks while taking the turns
+
+-Kp value was decreased for reverse steering and set it value to 0.1
+
+-Made No Changes to the Kd because as what it starts for: the difference between the current and the previous one, which backslashed the affect of Kp. Hence, I set it as default, which is 1.0

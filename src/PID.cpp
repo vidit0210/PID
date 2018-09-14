@@ -1,5 +1,4 @@
 #include "PID.h"
-#include <deque>
 
 using namespace std;
 
@@ -15,30 +14,21 @@ void PID::Init(double Kp, double Ki, double Kd) {
     this->Kp = Kp;
     this->Ki = Ki;
     this->Kd = Kd;
-
-    this->p_error = 0;
-    this->i_error = 0;
-    this->d_error = 0;
-
-    i_window = new deque<double>;
+    this->sum_cte = 0.0;
+    this->prev_cte = 0.0;
 }
 
 void PID::UpdateError(double cte) {
-    d_error = cte - p_error;
-    p_error = cte;
-    if (i_window->size() == 30) {
-        i_window->pop_back();
-    }
+    double diff_cte = cte - prev_cte;
+    sum_cte += cte;
 
-    i_window->push_front(cte);
-    i_error = 0;
-    for (auto& i : *i_window) {
-        i_error += i;
-    }
+    p_error = -Kp * cte;
+    i_error = -Ki * sum_cte;
+    d_error = -Kd * diff_cte;
+
+    prev_cte = cte;
 }
 
 double PID::TotalError() {
-    return  (-Kp * p_error)
-            + (-Kd * d_error)
-            + (-Ki * i_error);
+    return p_error + i_error + d_error;
 }

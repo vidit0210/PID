@@ -1,8 +1,6 @@
 #ifndef PID_H
 #define PID_H
 
-#include <deque>
-
 class PID {
 public:
     /*
@@ -18,6 +16,9 @@ public:
     double Kp;
     double Ki;
     double Kd;
+
+    double prev_cte;
+    double sum_cte;
 
     /*
     * Constructor
@@ -43,9 +44,6 @@ public:
     * Calculate the total PID error.
     */
     double TotalError();
-
-private:
-    std::deque<double> *i_window;
 };
 
 #endif /* PID_H */
